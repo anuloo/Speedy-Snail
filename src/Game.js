@@ -1,10 +1,12 @@
 /**
  * Created by jollzy on 01/12/2015.
  */
+var pickedRunner =1;
 function Game(){
     this.bg = null;
     this.itemCreator = null;
     this.gameStage = null;
+    this.betBar = null;
 }
 //once all assets loaded we adding them to stage
 Game.prototype.onAssetsLoaded = function(){
@@ -12,5 +14,6 @@ Game.prototype.onAssetsLoaded = function(){
     this.itemCreator = new ItemCreator();
     this.bg = new Background();
     this.gameStage = new GameStage(this.itemCreator);
+    this.betBar = new BetBar(this.itemCreator);
 };
 

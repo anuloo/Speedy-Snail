@@ -6,6 +6,16 @@
     "snail3": "assets/images/snail3.png",
     "snail1_s": "assets/images/snail1_s.png",
     "snail2_s": "assets/images/snail2_s.png",
-    "snail3_s": "assets/images/snail3_s.png"
+    "snail3_s": "assets/images/snail3_s.png",
+    "betbar": "assets/images/betbar.jpg",
+    "btn_start": "assets/images/btn_start.png",
+    "btn_start_d": "assets/images/btn_start_d.png",
+    "btn_minus": "assets/images/btn_minus.png",
+    "btn_minus_d": "assets/images/btn_minus_d.png",
+    "btn_plus": "assets/images/btn_plus.png",
+    "btn_plus_d": "assets/images/btn_plus_d.png",
+    "label_picked1": "assets/images/label_picked1.png",
+    "label_picked2": "assets/images/label_picked2.png",
+    "label_picked3": "assets/images/label_picked3.png"
   }
 }

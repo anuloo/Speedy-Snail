@@ -28,10 +28,6 @@ function GameStage(itemCreator){
         this.runners[i].setFinishLineX(Constants.RUNNER_FINISH_LINE_X);
         this.addChild(this.runners[i]);
     }
-    //adding the runners in the reverse order
-    this.addChild(this.runners[2]);
-    /*this.addChild(this.runners[1]);
-    this.addChild(this.runners[0]);*/
 
     stage.addChild(this);
 
@@ -40,15 +36,6 @@ function GameStage(itemCreator){
     animate = animate.bind(this);
     Events.Dispatcher.addEventListener(GameEventType.RACE_START,this.onRaceStart);
     requestAnimationFrame(animate );
-
-    //start test
-    var scope = this;
-    this.delayRaceStart = setTimeout(function(){
-        //this will fires from the bet control once the user ready
-        Events.Dispatcher.dispatchEvent(new Event(GameEventType.RACE_START));
-    },2000);
-
-
 };
 
 GameStage.prototype = Object.create(PIXI.Container.prototype);
@@ -93,17 +80,13 @@ GameStage.prototype.onRaceStart = function(){
             scope.runners[i].setSpeed(Constants.SPEEDS[randomnumber]);
         }
     }
-    this.runners[2].setState(AnimState.PICKED);
+    this.runners[0].setState(AnimState.PICKED);
     this.generateSpeed();
     this.gameStart = true;
 };
 
 GameStage.prototype.onResult = function(runner){
-    console.log("The winning runner is snail "+ runner.id);
-    /**
-     * TODO dispacth an complete event
-     *
-     */
+    Events.Dispatcher.dispatchEvent(new Event(GameEventType.RACE_COMPLETED,runner.id));
     runner.setState(AnimState.IDLE);
     this.resetRunners();
 };

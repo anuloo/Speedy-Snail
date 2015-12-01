@@ -14,6 +14,17 @@ function ItemCreator() {
         item.y = item.y + y;
         item.x = item.x + x;
     }
+    //as i thought would it be need another create method for the label
+    this.createLabel = function (text,style) {
+        label = new PIXI.Text(text.toString(),style);
+        return label;
+    }
+
+    this.setLabelProperties = function(anchorX,x,y){
+        label.anchor.x = anchorX;
+        label.y = y;
+        label.x = label.x - x;
+    }
 }
 
 
