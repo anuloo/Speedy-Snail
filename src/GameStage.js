@@ -26,11 +26,12 @@ function GameStage(itemCreator){
          * TODO add different type of finish line position  as the game a bit perspective
          */
         this.runners[i].setFinishLineX(Constants.RUNNER_FINISH_LINE_X);
+        this.addChild(this.runners[i]);
     }
     //adding the runners in the reverse order
     this.addChild(this.runners[2]);
-    this.addChild(this.runners[1]);
-    this.addChild(this.runners[0]);
+    /*this.addChild(this.runners[1]);
+    this.addChild(this.runners[0]);*/
 
     stage.addChild(this);
 
