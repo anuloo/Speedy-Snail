@@ -1,5 +1,11 @@
 {
   "images":{
-    "background": "assets/images/background.jpg"
+    "background": "assets/images/background.jpg",
+    "snail1": "assets/images/snail1.png",
+    "snail2": "assets/images/snail2.png",
+    "snail3": "assets/images/snail3.png",
+    "snail1_s": "assets/images/snail1_s.png",
+    "snail2_s": "assets/images/snail2_s.png",
+    "snail3_s": "assets/images/snail3_s.png"
   }
 }
