@@ -6,6 +6,7 @@ var gameWidth = Constants.GAME_WIDTH;
 var gameHeight = Constants.GAME_HEIGHT;
 var renderer = PIXI.autoDetectRenderer(gameWidth, gameHeight);
 var game = null;
+var snailMove;
 //size will holds throughout the game window bounds when window is resized
 var size = getWindowBounds();
 
@@ -51,6 +52,8 @@ window.onload = function() {
 
         //resize the game when all assets loaded
         onWindowResize();
+
+        loadSound();
     }
 
     loadJSON("assets.json", responseHandler);
@@ -100,5 +103,40 @@ function onWindowResize(Event){
     for(var child=0; child<stage.children.length; ++child){
         if(stage.children[child].resize)stage.children[child].resize({size:size,scale:scale});
     }
+};
+
+//lets add some sound to our game
+function loadSound() {
+    soundManager.setup({
+        onready: function () {
+            snailMove = soundManager.createSound({
+                id: "snailmove",
+                url: "assets/sounds/snail_move.mp3"
+            });
+            soundManager.createSound({
+                id: "win",
+                url: "assets/sounds/win.mp3"
+            });
+            soundManager.createSound({
+                id: "lose",
+                url: "assets/sounds/lose.mp3"
+            });
+        },
+
+        ontimeout: function () {
+            alert("oops no sound");
+        }
+
+    });
+};
+
+//we may want other loops so its a good place as any to access
+function loopSound(sound) {
+    sound.play({
+        onfinish: function() {
+            loopSound(sound);
+        }
+
+    });
 };
 

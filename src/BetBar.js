@@ -80,10 +80,10 @@ function BetBar(itemCreator, pickPanel, winPanel){
 
     //this little trick takes care of the scope issues
     this.onRaceCompleted = this.onRaceCompleted.bind(this);
+    Events.Dispatcher.addEventListener(GameEventType.RACE_COMPLETED,this.onRaceCompleted);
     this.onGameEnabled = this.onGameEnabled.bind(this);
     this.startRace = this.startRace.bind(this);
     this.getWin = this.getWin.bind(this);
-    Events.Dispatcher.addEventListener(GameEventType.RACE_COMPLETED,this.onRaceCompleted);
     Events.Dispatcher.addEventListener(GameEventType.BET_COMPLETED,this.onGameEnabled);
 
     this.currentBet = Constants.BET_VALUES[0];
@@ -163,10 +163,10 @@ BetBar.prototype.onRaceCompleted = function(event){
     if(event.data == pickedRunner) {
         this.labels[Constants.LABEL_WINNING].text = this.getWin();
         this.updateBallanceDelay = setTimeout(function(){scope.updateBalance()},1000);
-        //TODO play win sound
+        //i moved the sound to the win panel it gives more umf
         console.log("YEEPEE I WIN " + event.data)
     }else{
-        //TODO play loose sound
+        soundManager.play("lose");
         this.pickPanel.show(true);
         console.log("OH NOOOOO " + event.data)
     }

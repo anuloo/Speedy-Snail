@@ -19,10 +19,7 @@ function GameStage(itemCreator){
         var texture2 = texture1 + "_s";
         this.runners[i] = itemCreator.create(Snail,[texture1, texture2],this,this.onResult,i+1);
         itemCreator.setProperties(0.5,Constants.RUNNERS_START_POS.x[i],Constants.RUNNERS_START_POS.y[i]);
-        /**
-         * TODO add different type of finish line position  as the game a bit perspective
-         */
-        this.runners[i].setFinishLineX(Constants.RUNNER_FINISH_LINE_POS.x);
+        this.runners[i].setFinishLineX(Constants.RUNNER_FINISH_LINE_POS.x[i]);
         this.addChild(this.runners[i]);
     }
 
@@ -65,19 +62,21 @@ GameStage.prototype.onRaceStart = function(){
     var scope = this;
     this.generateSpeed = function(){
         for(var i = 0; i < scope.runners.length; i++) {
-            var randomnumber = Math.floor(Math.random() * 2);
+            var randomnumber = Math.floor(Math.random() * 10);
             scope.runners[i].setSpeed(Constants.SPEEDS[randomnumber]);
         }
     }
 
     this.runners[pickedRunner-1].setState(AnimState.PICKED);
     this.generateSpeed();
-    scope.runners[1].setSpeed(2);
+    this.interval = setInterval(function(){scope.generateSpeed()},1000);
     this.gameStart = true;
+    loopSound(snailMove);
 };
 
 GameStage.prototype.onResult = function(runner){
     Events.Dispatcher.dispatchEvent(new Event(GameEventType.RACE_COMPLETED,runner.id));
     runner.setState(AnimState.IDLE);
+    snailMove.stop();
     this.resetRunners();
 };

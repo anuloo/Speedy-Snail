@@ -8,8 +8,8 @@ var Constants={
     GAME_WIDTH : 1136,
     GAME_HEIGHT : 640,
     RUNNERS_START_POS:{x:[-455, -505, -550], y:[-310, -280, -100]},
-    RUNNER_FINISH_LINE_POS:{x:420},
-    SPEEDS : [0.5, 0.7, 0.8],
+    RUNNER_FINISH_LINE_POS:{x:[420, 390, 375]},
+    SPEEDS : [0.2, 0.5, 0.7 ,0.1, 0.5, 0.4, 0.1, 0.2, 0.1, 0.1, 0.1],
     //----------------------------BetBar
     INITIAL_BALANCE : 1000,
     BETBAR_POSITION_Y : 180,

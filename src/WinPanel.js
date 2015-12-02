@@ -31,7 +31,7 @@ WinPanel.prototype.constructor = WinPanel;
 WinPanel.prototype.onTweenComplete = function(isShow){
     var scope = this;
     if(isShow==true){
-        this.delayClosePanel = setTimeout(function(){scope.show(false)},1000);
+        this.delayClosePanel = setTimeout(function(){scope.show(false)},2000);
     }else{
         Events.Dispatcher.dispatchEvent(new Event(GameEventType.WIN_PRESENTATION_COMPLETED));
     }
