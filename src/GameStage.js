@@ -1,8 +1,5 @@
 /**
  * Created by jollzy on 01/12/2015.
- * As we not using stage as a grouping or a container type
- * GameStage is another container which holds the elements
- * for the race (snails and the game loop)
  */
 
 function GameStage(itemCreator){
@@ -16,8 +13,6 @@ function GameStage(itemCreator){
     //holds the runners instances (snails)
     this.runners = [];
 
-    //this.mask = this.gameMask;
-
     //create the runners(snails)
     for (var i = 0; i < Constants.AMOUNT_RUNNERS; i++){
         var texture1 = "snail"+(i+1);
@@ -30,8 +25,6 @@ function GameStage(itemCreator){
         this.runners[i].setFinishLineX(Constants.RUNNER_FINISH_LINE_POS.x);
         this.addChild(this.runners[i]);
     }
-    //stage.addChild(this);
-
 
     this.onRaceStart = this.onRaceStart.bind(this);
     this.onResult= this.onResult.bind(this);
@@ -43,7 +36,7 @@ function GameStage(itemCreator){
 GameStage.prototype = Object.create(PIXI.Container.prototype);
 GameStage.prototype.constructor = GameStage;
 
-GameStage.prototype.race = function(){
+GameStage.prototype.gameLoop = function(){
     if(this.gameStart==true) {
         // Move the snail
         for(var i = 0; i < this.runners.length; i++){

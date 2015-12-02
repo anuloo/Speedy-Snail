@@ -3,7 +3,7 @@
  * Here we handling all the bet functionality
  */
 //TODO break up the class is too long (if i have time)
-function BetBar(itemCreator){
+function BetBar(itemCreator, pickPanel){
     PIXI.Container.call(this);
     //label style
     var style = {
@@ -11,6 +11,7 @@ function BetBar(itemCreator){
         fill : '#FFFFFF'
     };
 
+    this.pickPanel = pickPanel;
     // initial balance
     this.ballanceAmount = Constants.INITIAL_BALANCE;
     this.winningAmount = 0;
@@ -61,7 +62,7 @@ function BetBar(itemCreator){
     itemCreator.setProperties(0.5,Constants.IMAGE_LABEL_POS.x, Constants.IMAGE_LABEL_POS.y);
     this.imageLabel.setVisible(false);
     this.startButton.addChild(this.imageLabel);
-    //this.startButton.setState(ButtonState.DISABLED);
+    this.startButton.setState(ButtonState.DISABLED);
 
     this.plusButton = itemCreator.create(SimpleButton,["btn_plus", "btn_plus_d"],this,this.onBet,Constants.PLUS_BUTTON_ID);
     itemCreator.setProperties(0.5,Constants.PLUS_BUTTON_POS.x,Constants.PLUS_BUTTON_POS.y);
@@ -77,9 +78,11 @@ function BetBar(itemCreator){
 
     //this little trick takes care of the scope issues
     this.onRaceCompleted = this.onRaceCompleted.bind(this);
+    this.onGameEnabled = this.onGameEnabled.bind(this);
     this.startRace = this.startRace.bind(this);
     this.getWin = this.getWin.bind(this);
     Events.Dispatcher.addEventListener(GameEventType.RACE_COMPLETED,this.onRaceCompleted);
+    Events.Dispatcher.addEventListener(GameEventType.BET_COMPLETED,this.onGameEnabled);
 
     this.currentBet = Constants.BET_VALUES[0];
 
@@ -100,10 +103,10 @@ BetBar.prototype.startRace = function(btn){
     if(self.ballanceAmount>=self.currentBet && self.ballanceAmount >= Constants.BET_VALUES[0]) {
         self.enableButtons(false);
         self.updateBet(self.betIndex)
+        self.imageLabel.setState(pickedRunner-1);
+        self.imageLabel.setVisible(true);
         Events.Dispatcher.dispatchEvent(new Event(GameEventType.RACE_START));
     }
-    self.imageLabel.setState(pickedRunner-1);
-    self.imageLabel.setVisible(true);
 };
 
 BetBar.prototype.enableButtons = function(isEnable){
@@ -147,6 +150,10 @@ BetBar.prototype.onBet = function(btn){
     self.labels[Constants.LABEL_BET].text = self.currentBet.toString();
 };
 
+BetBar.prototype.onGameEnabled = function(){
+    this.enableButtons(true)
+};
+
 BetBar.prototype.onRaceCompleted = function(event){
     console.log("The winning runner is snail "+ event.data);
     var scope = this;
@@ -158,11 +165,11 @@ BetBar.prototype.onRaceCompleted = function(event){
         console.log("YEEPEE I WIN " + event.data)
     }else{
         //TODO play loose sound
-        //TODO show pick runner panel;
+        this.pickPanel.show(true);
         console.log("OH NOOOOO " + event.data)
     }
     this.imageLabel.setVisible(false);
-    this.enableButtons(true);
+    //this.enableButtons(true);
 };
 
 BetBar.prototype.updateBet = function(index){
@@ -176,6 +183,6 @@ BetBar.prototype.updateBalance = function (){
     this.ballanceAmount +=this.getWin();
     this.labels[Constants.LABEL_BALANCE].text = this.ballanceAmount.toString();
     clearTimeout(this.updateBallanceDelay);
-    //TODO show pick runner panel;
+    this.pickPanel.show(true);
     this.labels[Constants.LABEL_WINNING].text = 0;
 };

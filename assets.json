@@ -18,6 +18,7 @@
     "label_picked2":  "assets/images/label_picked2.png",
     "label_picked3":  "assets/images/label_picked3.png",
     "pick_panel":     "assets/images/pick_panel.png",
+    "pick_panel_mask": "assets/images/pick_panel_mask.jpg",
     "btn_pick1":      "assets/images/btn_pick1.png",
     "btn_pick1_s":    "assets/images/btn_pick1_s.png",
     "btn_pick2":      "assets/images/btn_pick2.png",

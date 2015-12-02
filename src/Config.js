@@ -6,13 +6,13 @@ var Constants={
     //----------------------------GameStage
     AMOUNT_RUNNERS:3,
     GAME_WIDTH : 1136,
-    GAME_HEIGHT : 1136,
+    GAME_HEIGHT : 640,
     RUNNERS_START_POS:{x:[-455, -505, -550], y:[-310, -290, -100]},
     RUNNER_FINISH_LINE_POS:{x:420},
     SPEEDS : [0.5, 0.7, 0.8],
     //----------------------------BetBar
     INITIAL_BALANCE : 1000,
-    BETBAR_POSITION_Y : 170,
+    BETBAR_POSITION_Y : 195,
     AMOUNT_BETBAR_LABELS:3,
     BETBAR_LABELS_POS :{x:[410, 150, -115], y:65},
     LABEL_BALANCE: "balance",
@@ -26,18 +26,10 @@ var Constants={
     MIN_BUTTON_ID :0,
     PLUS_BUTTON_ID :1,
     //----------------------------PickPanel
-    BUTTON_RUNNER1_X:-200,
-    BUTTON_RUNNER2_X:0,
-    BUTTON_RUNNER3_X:210,
-    BUTTON_RUNNER1_Y:-60,
-    BUTTON_RUNNER2_Y:-100,
-    BUTTON_OK_X:300,
-    BUTTON_OK_Y:100,
-    BUTTON_RUNNER1_ID:0,
-    BUTTON_RUNNER2_ID:1,
-    BUTTON_RUNNER3_ID:2,
-    LABEL_PICKED_RUNNER_X:-262,
-    LABEL_PICKED_RUNNER_Y:-154
+    PICK_PANEL_POS: {x:0, y:30},
+    BUTTON_RUNNERS_POS:{x:[-200, 0, 210],y:[-60, -100, -60]},
+    BUTTON_OK_POS:{x:300, y:100},
+    LABEL_PICKED_RUNNER_POS:{x:-262, y:-154}
 };
 var GameEventType={
     ASSETS_LOADED : "GameEventType.ASSETS_LOADED",
