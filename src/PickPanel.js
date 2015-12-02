@@ -3,7 +3,7 @@
  * pop up panel to pick the runner
  */
 //TODO refactor
-function PickPanel(itemCreator){
+function PickPanel(texture,itemCreator){
 
     //label style
     var style = {
@@ -11,7 +11,7 @@ function PickPanel(itemCreator){
         fill : '#FFFFFF'
     };
 
-    PIXI.Sprite.call(this,PIXI.loader.resources["pick_panel"].texture);
+    Panel.call(this,texture);
     this.anchor.x = this.anchor.y = 0.5;
 
     // Initial positioning
@@ -56,35 +56,20 @@ function PickPanel(itemCreator){
     this.radioGroup(0);
 
     this.closePanel = this.closePanel.bind(this);
-
-    this.show = function(isShow){
-
-        if(isShow==true){
-            this.tweenIn  = new TWEEN.Tween(this.position);
-            this.tweenIn.to({y:30},200);
-            this.tweenIn.start();
-            this.tweenIn.onComplete(function() {
-                TWEEN.remove(this.tweenIn);
-                this.tweenIn = null;
-            });
-        }else{
-            this.tweenOut  = new TWEEN.Tween(this.position);
-            this.tweenOut.to({y:400},500);
-            this.tweenOut.start();
-            this.tweenOut.onComplete(function() {
-                Events.Dispatcher.dispatchEvent(new Event(GameEventType.BET_COMPLETED));
-                TWEEN.remove(this.tweenOut);
-                this.tweenOut = null;
-            });
-        }
-    };
+    //this.visible = false;
 };
 
-PickPanel.prototype = Object.create(PIXI.Sprite.prototype);
+PickPanel.prototype = Object.create(Panel.prototype);
 PickPanel.prototype.constructor = PickPanel;
 
 PickPanel.prototype.pickWinner = function(btn){
     btn.self.radioGroup(btn.id);
+};
+
+PickPanel.prototype.onTweenComplete = function(isShow){
+    if(!isShow)Events.Dispatcher.dispatchEvent(new Event(GameEventType.BET_COMPLETED));
+    TWEEN.remove(this.tween);
+    this.tween = null;
 };
 
 PickPanel.prototype.closePanel = function(btn){

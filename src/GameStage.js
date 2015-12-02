@@ -69,8 +69,10 @@ GameStage.prototype.onRaceStart = function(){
             scope.runners[i].setSpeed(Constants.SPEEDS[randomnumber]);
         }
     }
+
     this.runners[pickedRunner-1].setState(AnimState.PICKED);
     this.generateSpeed();
+    scope.runners[1].setSpeed(2);
     this.gameStart = true;
 };
 

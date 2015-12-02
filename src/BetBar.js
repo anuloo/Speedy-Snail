@@ -3,7 +3,7 @@
  * Here we handling all the bet functionality
  */
 //TODO break up the class is too long (if i have time)
-function BetBar(itemCreator, pickPanel){
+function BetBar(itemCreator, pickPanel, winPanel){
     PIXI.Container.call(this);
     //label style
     var style = {
@@ -12,6 +12,9 @@ function BetBar(itemCreator, pickPanel){
     };
 
     this.pickPanel = pickPanel;
+    this.winPanel = winPanel;
+
+    //this.winPanel.show(true);
     // initial balance
     this.ballanceAmount = Constants.INITIAL_BALANCE;
     this.winningAmount = 0;
@@ -22,7 +25,6 @@ function BetBar(itemCreator, pickPanel){
     var size = getWindowBounds();
     this.position.x = 0;
     this.position.y = 0;
-
     this.betbarSprite = new PIXI.Sprite(PIXI.loader.resources["betbar"].texture);
     this.betbarSprite.anchor.x = 0.5;
     this.betbarSprite.anchor.y = 0;
@@ -176,6 +178,7 @@ BetBar.prototype.updateBet = function(index){
     this.currentBet = Constants.BET_VALUES[index];
     this.ballanceAmount-=this.currentBet;
     this.labels[Constants.LABEL_BALANCE].text = this.ballanceAmount.toString();
+    Events.Dispatcher.dispatchEvent(new Event(GameEventType.UPDATE_WIN,this.getWin()));
 };
 
 BetBar.prototype.updateBalance = function (){
@@ -183,6 +186,6 @@ BetBar.prototype.updateBalance = function (){
     this.ballanceAmount +=this.getWin();
     this.labels[Constants.LABEL_BALANCE].text = this.ballanceAmount.toString();
     clearTimeout(this.updateBallanceDelay);
-    this.pickPanel.show(true);
+    this.winPanel.show(true);
     this.labels[Constants.LABEL_WINNING].text = 0;
 };
