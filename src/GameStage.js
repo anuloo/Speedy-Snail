@@ -16,36 +16,32 @@ function GameStage(itemCreator){
     //holds the runners instances (snails)
     this.runners = [];
 
+    //this.mask = this.gameMask;
+
     //create the runners(snails)
     for (var i = 0; i < Constants.AMOUNT_RUNNERS; i++){
         var texture1 = "snail"+(i+1);
         var texture2 = texture1 + "_s";
         this.runners[i] = itemCreator.create(Snail,[texture1, texture2],this,this.onResult,i+1);
-        itemCreator.setProperties(0.5,Constants.RUNNERS_START_X[i],Constants.RUNNERS_START_Y[i]);
+        itemCreator.setProperties(0.5,Constants.RUNNERS_START_POS.x[i],Constants.RUNNERS_START_POS.y[i]);
         /**
          * TODO add different type of finish line position  as the game a bit perspective
          */
-        this.runners[i].setFinishLineX(Constants.RUNNER_FINISH_LINE_X);
+        this.runners[i].setFinishLineX(Constants.RUNNER_FINISH_LINE_POS.x);
         this.addChild(this.runners[i]);
     }
+    //stage.addChild(this);
 
-    stage.addChild(this);
 
     this.onRaceStart = this.onRaceStart.bind(this);
     this.onResult= this.onResult.bind(this);
-    animate = animate.bind(this);
+
     Events.Dispatcher.addEventListener(GameEventType.RACE_START,this.onRaceStart);
-    requestAnimationFrame(animate );
+
 };
 
 GameStage.prototype = Object.create(PIXI.Container.prototype);
 GameStage.prototype.constructor = GameStage;
-
-function animate() {
-    this.race();
-    requestAnimationFrame(animate);
-    renderer.render(stage);
-};
 
 GameStage.prototype.race = function(){
     if(this.gameStart==true) {
@@ -65,7 +61,7 @@ GameStage.prototype.race = function(){
 
 GameStage.prototype.resetRunners = function(){
     for(var i = 0; i < this.runners.length; i++) {
-        this.runners[i].position.x = (Constants.RUNNERS_START_X[i]);
+        this.runners[i].position.x = (Constants.RUNNERS_START_POS.x[i]);
         this.runners[i].setState(AnimState.IDLE);
     }
 };
@@ -80,7 +76,7 @@ GameStage.prototype.onRaceStart = function(){
             scope.runners[i].setSpeed(Constants.SPEEDS[randomnumber]);
         }
     }
-    this.runners[0].setState(AnimState.PICKED);
+    this.runners[pickedRunner-1].setState(AnimState.PICKED);
     this.generateSpeed();
     this.gameStart = true;
 };
@@ -89,12 +85,4 @@ GameStage.prototype.onResult = function(runner){
     Events.Dispatcher.dispatchEvent(new Event(GameEventType.RACE_COMPLETED,runner.id));
     runner.setState(AnimState.IDLE);
     this.resetRunners();
-};
-
-GameStage.prototype.resize = function(data){
-    var size = getWindowBounds();
-    this.scale.x = data.scale.x;
-    this.scale.y = data.scale.x;
-    this.position.x = size.x/2;
-    this.position.y = size.y/2;
 };

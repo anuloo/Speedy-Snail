@@ -46,10 +46,7 @@ window.onload = function() {
         game.onAssetsLoaded();
         gameWidth = game.bg.getBounds().width;
         gameHeight = game.bg.getBounds().height;
-
         document.body.appendChild(renderer.view);
-        requestAnimationFrame( animate );
-
         window.addEventListener('resize', onWindowResize);
 
         //resize the game when all assets loaded
@@ -57,14 +54,6 @@ window.onload = function() {
     }
 
     loadJSON("assets.json", responseHandler);
-
-    function animate() {
-
-        requestAnimationFrame( animate );
-
-        // render the stage
-        renderer.render(stage);
-    };
 
 };
 
@@ -90,6 +79,10 @@ function Rectangle(x,y,w,h){
     this.height = h;
 };
 
+/**
+ * I am very proud of this little code here
+ * this function takes care any size of mobile devices
+ */
 function onWindowResize(Event){
     var size = getWindowBounds();
     renderer.resize(size.x,size.y);

@@ -3,32 +3,47 @@
  * Keep all the positions other constant values and event types in one place.
  */
 var Constants={
+    //----------------------------GameStage
     AMOUNT_RUNNERS:3,
     GAME_WIDTH : 1136,
     GAME_HEIGHT : 1136,
-    RUNNERS_START_X:[-455,-505,-550],
-    RUNNERS_START_Y:[-310,-290,-100],
-    RUNNER_FINISH_LINE_X:420,
+    RUNNERS_START_POS:{x:[-455, -505, -550], y:[-310, -290, -100]},
+    RUNNER_FINISH_LINE_POS:{x:420},
     SPEEDS : [0.5, 0.7, 0.8],
-    INITIAL_BALLANCE : 1000,
+    //----------------------------BetBar
+    INITIAL_BALANCE : 1000,
     BETBAR_POSITION_Y : 170,
-    LABEL_POSITION_Y : 65,
-    LABEL_BALLANCE_X : 410,
-    LABEL_WINNINGS_X : 150,
-    LABEL_BET_X : 115,
-    START_BUTTON_X : 440,
-    START_BUTTON_Y : 17,
-    PLUS_BUTTON_Y : 17,
-    MINUS_BUTTON_Y : 70,
-    BET_BUTTON_X : 250,
-    BET_VALUES : [10,50,100,500,1000,5000],
+    AMOUNT_BETBAR_LABELS:3,
+    BETBAR_LABELS_POS :{x:[410, 150, -115], y:65},
+    LABEL_BALANCE: "balance",
+    LABEL_WINNING: "winning",
+    LABEL_BET: "bet",
+    IMAGE_LABEL_POS : {x:0, y:20},
+    START_BUTTON_POS : {x:440, y:17},
+    PLUS_BUTTON_POS : {x: 250, y:17},
+    MINUS_BUTTON_POS : {x: 250, y:70},
+    BET_VALUES : [10, 50, 100, 500, 1000, 5000],
     MIN_BUTTON_ID :0,
-    PLUSS_BUTTON_ID :1
+    PLUS_BUTTON_ID :1,
+    //----------------------------PickPanel
+    BUTTON_RUNNER1_X:-200,
+    BUTTON_RUNNER2_X:0,
+    BUTTON_RUNNER3_X:210,
+    BUTTON_RUNNER1_Y:-60,
+    BUTTON_RUNNER2_Y:-100,
+    BUTTON_OK_X:300,
+    BUTTON_OK_Y:100,
+    BUTTON_RUNNER1_ID:0,
+    BUTTON_RUNNER2_ID:1,
+    BUTTON_RUNNER3_ID:2,
+    LABEL_PICKED_RUNNER_X:-262,
+    LABEL_PICKED_RUNNER_Y:-154
 };
 var GameEventType={
     ASSETS_LOADED : "GameEventType.ASSETS_LOADED",
     RACE_START: "GameEventType.RACE_START",
-    RACE_COMPLETED: "GameEventType.RACE_COMPLETE"
+    RACE_COMPLETED: "GameEventType.RACE_COMPLETE",
+    BET_COMPLETED: "GameEventType.BET_COMPLETED"
 };
 
 var AnimState = {
