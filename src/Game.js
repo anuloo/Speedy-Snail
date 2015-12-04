@@ -26,8 +26,8 @@ function Game(){
     Events.Dispatcher.addEventListener(GameEventType.WIN_PRESENTATION_COMPLETED,this.onWinPresentationComplete);
     this.onUpdateWinPanel= this.onUpdateWinPanel.bind(this);
     Events.Dispatcher.addEventListener(GameEventType.UPDATE_WIN,this.onUpdateWinPanel);
-    this.onRaceCompleted = this.onRaceCompleted.bind(this);
-    Events.Dispatcher.addEventListener(GameEventType.RACE_COMPLETED,this.onRaceCompleted);
+    //this.onRaceCompleted = this.onRaceCompleted.bind(this);
+    //Events.Dispatcher.addEventListener(GameEventType.RACE_COMPLETED,this.onRaceCompleted);
 
 };
 
@@ -85,9 +85,9 @@ Game.prototype.onUpdateWinPanel = function(event){
 };
 
 Game.prototype.onRaceCompleted = function(event){
-    if(event.data == pickedRunner) {
+    /*if(event.data == pickedRunner) {
         soundManager.play("win");
-    }
+    }*/
 };
 
 

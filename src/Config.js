@@ -7,11 +7,15 @@ var Constants={
     AMOUNT_RUNNERS:3,
     GAME_WIDTH : 1136,
     GAME_HEIGHT : 640,
-    RUNNERS_START_POS:{x:[-455, -505, -550], y:[-310, -280, -100]},
-    RUNNER_FINISH_LINE_POS:{x:[420, 390, 375]},
-    SPEEDS : [0.2, 0.5, 0.7 ,0.1, 0.5, 0.4, 0.1, 0.2, 0.1, 0.1, 0.1],
+    RUNNERS_START_POS:{x:[-435, -473, -530], y:[-310, -280, -100]},
+    RUNNER_FINISH_LINE_POS:{x:[375, 385, 415]},
+    SPEEDS : [
+        [0.2, 0.3, 0.2 ,0.2, 0.4, 0.4, 0.4, 0.4, 0.3, 0.3, 0.1],
+        [0.2, 0.2, 0.2 ,0.2, 0.4, 0.3, 0.4, 0.4, 0.6, 0.6, 0.1],
+        [0.1, 0.6, 0.6 ,0.4, 0.4, 0.4, 0.4, 0.2, 0.2, 0.2, 0.2],
+    ],
     //----------------------------BetBar
-    INITIAL_BALANCE : 1000,
+    INITIAL_BALANCE : 500,
     BETBAR_POSITION_Y : 180,
     AMOUNT_BETBAR_LABELS:3,
     BETBAR_LABELS_POS :{x:[410, 150, -115], y:65},
@@ -22,7 +26,7 @@ var Constants={
     START_BUTTON_POS : {x:440, y:17},
     PLUS_BUTTON_POS : {x: 250, y:17},
     MINUS_BUTTON_POS : {x: 250, y:70},
-    BET_VALUES : [10, 50, 100, 500, 1000, 5000],
+    BET_VALUES : [10, 50, 100, 250, 500, 1000, 2000, 3000, 5000, 10000],
     MIN_BUTTON_ID :0,
     PLUS_BUTTON_ID :1,
     //----------------------------PickPanel

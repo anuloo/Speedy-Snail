@@ -1,7 +1,7 @@
 /**
  * Created by jollzy on 01/12/2015.
  */
-
+var TESTCOUNT = 12;
 function GameStage(itemCreator){
     PIXI.Container.call(this);
     this.gameStart = false;
@@ -9,6 +9,9 @@ function GameStage(itemCreator){
     var size = getWindowBounds();
     this.position.x = 0;
     this.position.y = 0;
+    this.winner = null;
+    this.counter = 0;
+
 
     //holds the runners instances (snails)
     this.runners = [];
@@ -25,8 +28,9 @@ function GameStage(itemCreator){
 
     this.onRaceStart = this.onRaceStart.bind(this);
     this.onResult= this.onResult.bind(this);
-
     Events.Dispatcher.addEventListener(GameEventType.RACE_START,this.onRaceStart);
+    this.onBetCompleted = this.onBetCompleted.bind(this);
+    Events.Dispatcher.addEventListener(GameEventType.BET_COMPLETED,this.onBetCompleted);
 
 };
 
@@ -43,7 +47,21 @@ GameStage.prototype.gameLoop = function(){
             if(this.runners[i].position.x > this.runners[i].finishLineX){
                 clearInterval(this.interval);
                 this.gameStart = false;
-                this.onResult(this.runners[i]);
+                this.winner = this.runners[i]
+                this.counter++;
+               /* switch(this.winner.id){
+                    case 1:
+                        console.log(this.counter+"  winner snail ---- "+ this.winner.id);
+                        break;
+                    case 2:
+                        console.log(this.counter+"  winner snail ------- "+ this.winner.id);
+                        break;
+                    case 3:
+                        console.log(this.counter+"  winner snail ---------- "+ this.winner.id);
+                        break;
+                }*/
+
+                this.onResult();
             }
         }
     }
@@ -54,29 +72,60 @@ GameStage.prototype.resetRunners = function(){
         this.runners[i].position.x = (Constants.RUNNERS_START_POS.x[i]);
         this.runners[i].setState(AnimState.IDLE);
     }
+    if(this.winner.id != pickedRunner/* && this.counter>=TESTCOUNT*/) {
+
+        Events.Dispatcher.dispatchEvent(new Event(GameEventType.RACE_COMPLETED,this.winner.id));
+    }
+    clearTimeout(this.resetRunnersDelay);
+   /* if(this.counter>=TESTCOUNT){
+        this.counter = 0;
+    }else{
+
+        this.onRaceStart()
+    }*/
 };
 
 GameStage.prototype.onRaceStart = function(){
-    console.log("Game start");
+    //console.log("Game start");
 
     var scope = this;
+    var count = 1;
+    var speed = 0.2;
     this.generateSpeed = function(){
+        //console.log(count+" ----------------------------------------");
         for(var i = 0; i < scope.runners.length; i++) {
             var randomnumber = Math.floor(Math.random() * 10);
-            scope.runners[i].setSpeed(Constants.SPEEDS[randomnumber]);
+            speed = Constants.SPEEDS[i][randomnumber];
+            scope.runners[i].setSpeed(speed);
+            //console.log("snail"+(i+1)+" speed: "+ speed);
         }
-    }
+        count++;
 
-    this.runners[pickedRunner-1].setState(AnimState.PICKED);
+    }
     this.generateSpeed();
-    this.interval = setInterval(function(){scope.generateSpeed()},1000);
+    this.interval = setInterval(function(){scope.generateSpeed()},5000);
+
+    //this.runners[1].setSpeed(15); testing only
     this.gameStart = true;
     loopSound(snailMove);
 };
 
-GameStage.prototype.onResult = function(runner){
-    Events.Dispatcher.dispatchEvent(new Event(GameEventType.RACE_COMPLETED,runner.id));
-    runner.setState(AnimState.IDLE);
+GameStage.prototype.onResult = function(){
     snailMove.stop();
-    this.resetRunners();
+    var scope = this;
+    var delay = 1000;
+    if(this.winner.id == pickedRunner/* && this.counter>=TESTCOUNT*/) {
+        soundManager.play("win");
+        delay = 2000;
+        Events.Dispatcher.dispatchEvent(new Event(GameEventType.RACE_COMPLETED,this.winner.id));
+    }else{
+        soundManager.play("lose");
+    }
+    if(this.winner!=null){
+        this.resetRunnersDelay = setTimeout(function(){scope.resetRunners()},delay);
+    }
+};
+
+GameStage.prototype.onBetCompleted = function(){
+    this.runners[pickedRunner-1].setState(AnimState.PICKED);
 };

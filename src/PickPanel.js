@@ -67,7 +67,9 @@ PickPanel.prototype.pickWinner = function(btn){
 };
 
 PickPanel.prototype.onTweenComplete = function(isShow){
-    if(!isShow)Events.Dispatcher.dispatchEvent(new Event(GameEventType.BET_COMPLETED));
+    if(!isShow){
+        Events.Dispatcher.dispatchEvent(new Event(GameEventType.BET_COMPLETED));
+    }
     TWEEN.remove(this.tween);
     this.tween = null;
 };

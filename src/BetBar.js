@@ -161,14 +161,10 @@ BetBar.prototype.onRaceCompleted = function(event){
     var scope = this;
     //we check if we won
     if(event.data == pickedRunner) {
-        this.labels[Constants.LABEL_WINNING].text = this.getWin();
-        this.updateBallanceDelay = setTimeout(function(){scope.updateBalance()},1000);
-        //i moved the sound to the win panel it gives more umf
-        console.log("YEEPEE I WIN " + event.data)
+        this.winPanel.show(true);
+        this.updateWinningDelay = setTimeout(function(){scope.updateWinning()},1000);
     }else{
-        soundManager.play("lose");
         this.pickPanel.show(true);
-        console.log("OH NOOOOO " + event.data)
     }
     this.imageLabel.setVisible(false);
     //this.enableButtons(true);
@@ -186,6 +182,12 @@ BetBar.prototype.updateBalance = function (){
     this.ballanceAmount +=this.getWin();
     this.labels[Constants.LABEL_BALANCE].text = this.ballanceAmount.toString();
     clearTimeout(this.updateBallanceDelay);
-    this.winPanel.show(true);
     this.labels[Constants.LABEL_WINNING].text = 0;
+};
+
+BetBar.prototype.updateWinning = function (){
+    var scope = this;
+    this.labels[Constants.LABEL_WINNING].text = this.getWin();
+    this.updateBallanceDelay = setTimeout(function(){scope.updateBalance()},2000);
+    clearTimeout(this.updateWinningDelay);
 };
